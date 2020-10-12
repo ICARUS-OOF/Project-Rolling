@@ -86,6 +86,7 @@ namespace ProjectRolling.Data
         private void Crack()
         {
             Debug.Log("Player died!");
+            LevelHandler.singleton.onPlayerCrack?.Invoke(true);
         }
     }
 }

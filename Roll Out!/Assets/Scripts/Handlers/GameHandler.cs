@@ -1,9 +1,7 @@
 ﻿using ProjectRolling.Data;
-using System.Collections;
-using System.Collections.Generic;
+using ProjectRolling.Objects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 namespace ProjectRolling.Handlers
 {
     public class GameHandler : MonoBehaviour
@@ -57,6 +55,10 @@ namespace ProjectRolling.Handlers
             {
                 LevelHandler.singleton.playerData.transform.position = LastCheckpoint.transform.position;
             }
+        }
+        public void OnLevelRestart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         #endregion
 

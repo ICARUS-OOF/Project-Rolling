@@ -52,13 +52,23 @@ namespace ProjectRolling.Handlers
         {
             if (LevelHandler.singleton != null)
             {
-                LevelHandler.singleton.onPlayerCrack?.Invoke();
+                LevelHandler.singleton.onPlayerCrack?.Invoke(false);
             }
-            if (MenuHand)
+            if (LobbyHandler.singleton != null)
+            {
+                LobbyHandler.singleton.onPlayerRestart?.Invoke();
+            }
         }
         public void Quit()
         {
-            LevelHandler.singleton.onLevelQuit?.Invoke();
+            if (LevelHandler.singleton != null)
+            {
+                LevelHandler.singleton.onLevelQuit?.Invoke();
+            }
+            if (LobbyHandler.singleton != null)
+            {
+                LobbyHandler.singleton.onLobbyQuit?.Invoke();
+            }
         }
         public void ExitGame()
         {

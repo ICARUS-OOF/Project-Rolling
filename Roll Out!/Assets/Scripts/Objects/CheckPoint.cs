@@ -1,18 +1,17 @@
-﻿using System.Collections;
+﻿using ProjectRolling.Handlers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CheckPoint : MonoBehaviour
+namespace ProjectRolling.Objects
 {
-    // Start is called before the first frame update
-    void Start()
+    public class CheckPoint : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void OnTriggerEnter(Collider col)
+        {
+            if (col.transform.tag == GameHandler.PLAYER_TAG)
+            {
+                LevelHandler.singleton.onPlayerReachCheckpoint?.Invoke(this);
+            }
+        }
     }
 }

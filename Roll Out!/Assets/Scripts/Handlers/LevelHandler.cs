@@ -1,5 +1,6 @@
 ﻿using ProjectRolling.Data;
 using ProjectRolling.Events;
+using ProjectRolling.Objects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,10 +20,11 @@ namespace ProjectRolling.Handlers
         #endregion
         #region Properties
         public PlayerData playerData;
+        public GameObject DeathScreen;
         #endregion
         #region Events
         public NoArgumentEvent onCompleteLevel;
-        public NoArgumentEvent onPlayerCrack;
+        public OneArgumentEvent<bool> onPlayerCrack;
         public OneArgumentEvent<CheckPoint> onPlayerReachCheckpoint;
 
         public NoArgumentEvent onLevelRestart;
@@ -35,16 +37,27 @@ namespace ProjectRolling.Handlers
             onPlayerCrack += PlayerCracked;
             onPlayerReachCheckpoint += OnPlayerReachCheckpoint;
             onLevelQuit += OnLevelQuit;
+            onLevelRestart += OnLevelRestart;
         }
         #endregion
         #region Event Subscribers
         void CompletedLevel()
         {
             Debug.Log("Completed level!");
+            PlayerUI.singleton.canPause = false;
         }
-        void PlayerCracked()
+        void OnLevelRestart()
         {
-            GameHandler.singleton.OnPlayerRespawn();
+            GameHandler.singleton.OnLevelRestart();
+            PlayerUI.singleton.canPause = true;
+        }
+        void PlayerCracked(bool ActivateDeathScreen)
+        {
+            DeathScreen.SetActive(ActivateDeathScreen);
+            if (!ActivateDeathScreen)
+            {
+                GameHandler.singleton.OnPlayerRespawn();
+            }
         }
         void OnPlayerReachCheckpoint(CheckPoint cp)
         {
