@@ -1,13 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace ProjectRolling.Handlers
+namespace ProjectRolling.Events
 {
-    public class EventsHandler : MonoBehaviour
-    {
-        #region Delegates
-        delegate void NoArgumentEvent();
-        delegate void OneArgumentEvent<T>(T param);
-        #endregion
-    }
+    #region Delegates
+    public delegate void NoArgumentEvent();
+    public delegate void OneArgumentEvent<T>(T param);
+    #endregion
 }

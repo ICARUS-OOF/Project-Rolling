@@ -1,4 +1,6 @@
-﻿using ProjectRolling.Data;
+﻿using Cinemachine;
+using ProjectRolling.Data;
+using ProjectRolling.Handlers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +11,27 @@ namespace ProjectRolling.Movement
     {
         PlayerPhysics physics;
         public Transform cam;
+        public CinemachineBrain camBrain;
         private void Start()
         {
             physics = GetComponent<PlayerPhysics>();
         }
         private void Update()
         {
+            if (PlayerUI.singleton != null)
+            {
+                if (PlayerUI.singleton.isPaused)
+                {
+                    camBrain.enabled = false;
+                    GameHandler.FreezeTime();
+                    return;
+                } else
+                {
+                    GameHandler.UnfreezeTime();
+                    camBrain.enabled = true;
+                }
+            }
+
             float horiz = Input.GetAxisRaw("Horizontal");
             float vert = Input.GetAxisRaw("Vertical");
 

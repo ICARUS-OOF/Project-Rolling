@@ -2,27 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 namespace ProjectRolling.Objects
 {
     public class LevelTeleporter : MonoBehaviour
     {
-        [SerializeField] private GameObject InfoUI;
+        [SerializeField] private GameObject RotatingSquare;
+        [SerializeField] private string SceneName = "Level01";
         private void Update()
         {
             Collider[] colliders = GameHandler.GetOverlapSphereColliders(transform.position, 10f);
             foreach (Collider col in colliders)
             {
-                if (col.transform.tag == "Player")
+                if (col.transform.tag == GameHandler.PLAYER_TAG)
                 {
-                    InfoUI.SetActive(true);
-                    break;
+                    if (Input.GetKeyDown(KeyCode.Return))
+                    {
+                        SceneManager.LoadScene(SceneName);
+                    }
                 }
-                InfoUI.SetActive(false);
             }
-            if (colliders.Length == 0)
-            {
-                InfoUI.SetActive(false);
-            }
+            RotatingSquare.transform.Rotate(new Vector3(0f, 0f, 20f * Time.fixedDeltaTime));
         }
     }
 }
